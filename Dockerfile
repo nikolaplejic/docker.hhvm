@@ -14,7 +14,7 @@ ENV HOME /root
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # Use baseimage-docker's init system.
-CMD ["/sbin/my_init"]
+ENTRYPOINT ["/sbin/my_init"]
 
 # install add-apt-repository
 RUN sudo apt-get update
@@ -39,6 +39,13 @@ ADD nginx.sh /etc/service/nginx/run
 
 RUN mkdir /etc/service/hhvm
 ADD hhvm.sh /etc/service/hhvm/run
+
+# set up nginx default site
+ADD nginx-default /etc/nginx/sites-available/default
+
+# create a directory with a sample index.hh file
+RUN sudo mkdir -p /mnt/hhvm
+ADD index.hh /mnt/hhvm/index.hh
 
 RUN sudo /usr/share/hhvm/install_fastcgi.sh
 
