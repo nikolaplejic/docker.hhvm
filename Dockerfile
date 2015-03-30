@@ -35,9 +35,11 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 RUN mkdir /etc/service/nginx
 ADD nginx.sh /etc/service/nginx/run
+RUN chmod 700 /etc/service/nginx/run
 
 RUN mkdir /etc/service/hhvm
 ADD hhvm.sh /etc/service/hhvm/run
+RUN chmod 700 /etc/service/hhvm/run
 
 # set up nginx default site
 ADD nginx-default /etc/nginx/sites-available/default
